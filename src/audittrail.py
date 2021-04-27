@@ -1,7 +1,7 @@
 import csv
 
 def audittrail_creation(audittrail_input):
-    with open('AuditTrail.csv', 'a', newline='') as audittrail:
+    with open('../AuditTrail.csv', 'a', newline='') as audittrail:
         fieldnames = ['first name', 'last name', 'date of birth', 'test date', 'validation date', 'issuing authority',
                       'test id', 'validator']
         auditwriter = csv.DictWriter(audittrail, fieldnames=fieldnames)

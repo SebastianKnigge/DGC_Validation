@@ -1,3 +1,7 @@
+#import from src directory
+import sys
+sys.path.insert(1, './src')
+
 from fastapi import FastAPI
 import QR_vienna
 import QR_austria
