@@ -4,15 +4,15 @@ sys.path.insert(1, '../src')
 
 
 from fastapi import FastAPI
+
 import QR_vienna
 import QR_austria
 import URL_Identification
 import audittrail
+import SQLite
+
 
 app = FastAPI()
-
-password = "abcd"
-
 
 @app.get("/")
 async def welcome():
@@ -22,9 +22,14 @@ async def welcome():
 async def qr_validation(qr_url: str = "The QR Code you want to validate", audit_trail: bool = True,
                         apikey: str = "Your personal API key"):
 
-#We have to check if the qr_url is containing querry arguments e.g. & signs, if so, we have to replace them with %26
+    #The provided apikey equals the internal verfiy variable
+    verify = apikey
 
-    if apikey != password:
+    #Our verifier return a tuple with the apikey verification result in the first slot
+    apikey_verification = SQLite.verifier(verify)
+
+    #We have to check if the qr_url is containing querry arguments e.g. & signs, if so, we have to replace them with %26
+    if apikey_verification[0] != True:
         return {"message": "The API key validation failed"}
 
     URL_validation_position = URL_Identification.URL(qr_url)
@@ -46,12 +51,13 @@ async def qr_validation(qr_url: str = "The QR Code you want to validate", audit_
 
     #The audit trail will only be created if the querry paramenter "audit_trail" is true (default value)
     if audit_trail == True:
+
         # The validation result will now used as our audit trail input
         audittrail_input = validation_result
+
         # The input will be handed over to the audittrail creation function
-        audittrail.audittrail_creation(audittrail_input)
+        audittrail.audittrail_creation(audittrail_input, apikey_verification)
 
 
     #The return for the user is the audittrail input
     return {audittrail_input}
-
