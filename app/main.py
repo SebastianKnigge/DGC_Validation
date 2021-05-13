@@ -59,9 +59,8 @@ async def qr_validation(qr_url: str = "The QR Code you want to validate", audit_
         # The input will be handed over to the audittrail creation function
         audittrail_creation(audittrail_input, apikey_verification)
 
-
     #The return for the user is the audittrail input
-    return {audittrail_input}
+    return {validation_result}
 
 
 # define handler
