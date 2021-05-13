@@ -14,7 +14,7 @@ EU ... European Union
     in your terminal.
 3. after installation run the code via
     ```{bash}
-    $ uvicorn main:app --app-dir api --reload
+    $ uvicorn app.main:app --reload
     ```
 4. Test the API 
     Test case: https://app.wien.gv.at/validierung?id=VUQ4SllIL1pxK0VVU0ZJOElqVUljbDU3QkJGMll2NHdvY0VFVkZNU3h6aG5GNmZPQTU1SUVOK0V2eVhRNEhxeQ
@@ -56,7 +56,16 @@ EU ... European Union
             ]
         ]
         ```
+## packaging
 
+create function.zip:
+
+```{}
+cd venv/lib/python3.7/site-packages/
+zip -r9 ../../../../function.zip .
+cd ../../../../
+zip -g ./function.zip -r app
+```
 
 
 
